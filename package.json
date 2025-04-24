@@ -16,13 +16,21 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "@eslint/js": "^9.25.1",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.0.0",
     "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "eslintConfig": {
     "extends": [
