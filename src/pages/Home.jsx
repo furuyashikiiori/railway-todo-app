@@ -125,15 +125,30 @@ export const Home = () => {
 // 表示するタスク
 const Tasks = (props) => {
   const { tasks, selectListId, isDoneDisplay } = props;
+
+  // 残り時間を計算する関数
+  const calculateRemainingTime = (limit) => {
+    if (!limit) return '期限なし';
+    const now = new Date();
+    const deadline = new Date(limit);
+    const diff = deadline - now;
+
+    if (diff <= 0) {
+      return '期限切れ';
+    } else {
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      return `${hours}時間${minutes}分`;
+    }
+  };
+
   if (tasks === null) return <></>;
 
-  if (isDoneDisplay == 'done') {
+  if (isDoneDisplay === 'done') {
     return (
       <ul>
         {tasks
-          .filter((task) => {
-            return task.done === true;
-          })
+          .filter((task) => task.done === true)
           .map((task, key) => (
             <li key={key} className="task-item">
               <Link
@@ -143,6 +158,10 @@ const Tasks = (props) => {
                 {task.title}
                 <br />
                 {task.done ? '完了' : '未完了'}
+                <br />
+                期限: {task.limit ? new Date(task.limit).toLocaleString() : 'なし'}
+                <br />
+                残り時間: {calculateRemainingTime(task.limit)}
               </Link>
             </li>
           ))}
@@ -153,9 +172,7 @@ const Tasks = (props) => {
   return (
     <ul>
       {tasks
-        .filter((task) => {
-          return task.done === false;
-        })
+        .filter((task) => task.done === false)
         .map((task, key) => (
           <li key={key} className="task-item">
             <Link
@@ -165,6 +182,10 @@ const Tasks = (props) => {
               {task.title}
               <br />
               {task.done ? '完了' : '未完了'}
+              <br />
+              期限: {task.limit ? new Date(task.limit).toLocaleString() : 'なし'}
+              <br />
+              残り時間: {calculateRemainingTime(task.limit)}
             </Link>
           </li>
         ))}

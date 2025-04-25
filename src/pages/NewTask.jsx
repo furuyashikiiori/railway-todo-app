@@ -24,8 +24,8 @@ export const NewTask = () => {
     const data = {
       title: title,
       detail: detail,
-      limit: limit, //期限をデータに追加
       done: false,
+      limit: limit, //期限をデータに追加
     };
 
     axios
@@ -85,7 +85,7 @@ export const NewTask = () => {
             onChange={handleTitleChange}
             className="new-task-title"
           />
-          
+
           <br />
           <label>タスク期限</label>
           <br />
