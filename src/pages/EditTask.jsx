@@ -12,16 +12,19 @@ export const EditTask = () => {
   const [cookies] = useCookies();
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
+  const [limit, setLimit] = useState(''); // 期限用のステートを追加
   const [isDone, setIsDone] = useState();
   const [errorMessage, setErrorMessage] = useState('');
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
+  const handleLimitChange = (e) => setLimit(e.target.value); // 期限の変更を処理する関数を追加
   const handleIsDoneChange = (e) => setIsDone(e.target.value === 'done');
   const onUpdateTask = () => {
     console.log(isDone);
     const data = {
       title: title,
       detail: detail,
+      limit: limit, // 期限をデータに追加
       done: isDone,
     };
 
@@ -66,6 +69,7 @@ export const EditTask = () => {
         const task = res.data;
         setTitle(task.title);
         setDetail(task.detail);
+        setLimit(task.limit); // 期限を取得してステートにセット
         setIsDone(task.done);
       })
       .catch((err) => {
@@ -88,6 +92,17 @@ export const EditTask = () => {
             className="edit-task-title"
             value={title}
           />
+
+          <br />
+          <label>タスク期限</label>
+          <br />
+          <input
+            type="datetime-local" // 日時入力用フィールド
+            onChange={handleLimitChange}
+            className="edit-task-limit"
+            value={limit} // 期限を表示
+          />
+          
           <br />
           <label>詳細</label>
           <br />

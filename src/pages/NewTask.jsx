@@ -11,17 +11,21 @@ export const NewTask = () => {
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
+  const [limit, setLimit] = useState(''); //期限用のステートを追加
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
   const history = useHistory();
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
+  const handleLimitchange = (e) => setLimit(e.target.value); //期限の変更を処理する関数を追加
   const handleSelectList = (id) => setSelectListId(id);
+
   const onCreateTask = () => {
     const data = {
       title: title,
       detail: detail,
       done: false,
+      limit: limit, //期限をデータに追加
     };
 
     axios
@@ -81,6 +85,15 @@ export const NewTask = () => {
             onChange={handleTitleChange}
             className="new-task-title"
           />
+
+          <br />
+          <label>タスク期限</label>
+          <br />
+          <input type="datetime-local"
+          onchange={handleLimitchange}
+          className="new-task-limit"
+           />
+
           <br />
           <label>詳細</label>
           <br />
