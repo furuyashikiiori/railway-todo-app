@@ -19,12 +19,14 @@ export const EditTask = () => {
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleLimitChange = (e) => setLimit(e.target.value); // 期限の変更を処理する関数を追加
   const handleIsDoneChange = (e) => setIsDone(e.target.value === 'done');
+
   const onUpdateTask = () => {
+    const utcLimit = limit ? new Date(limit).toISOString() : null; // limitをUTC形式に変換
     console.log(isDone);
     const data = {
       title: title,
       detail: detail,
-      limit: limit, // 期限をデータに追加
+      limit: utcLimit, // 期限をデータに追加
       done: isDone,
     };
 
@@ -102,7 +104,7 @@ export const EditTask = () => {
             className="edit-task-limit"
             value={limit} // 期限を表示
           />
-          
+
           <br />
           <label>詳細</label>
           <br />

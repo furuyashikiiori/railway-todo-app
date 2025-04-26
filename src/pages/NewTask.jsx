@@ -21,11 +21,13 @@ export const NewTask = () => {
   const handleSelectList = (id) => setSelectListId(id);
 
   const onCreateTask = () => {
+    const utcLimit = limit ? new Date(limit).toISOString() : null; //limitをUTC形式に変換
+
     const data = {
       title: title,
       detail: detail,
       done: false,
-      limit: limit, //期限をデータに追加
+      limit: utcLimit, //期限をデータに追加
     };
 
     axios
@@ -89,10 +91,11 @@ export const NewTask = () => {
           <br />
           <label>タスク期限</label>
           <br />
-          <input type="datetime-local"
-          onchange={handleLimitchange}
-          className="new-task-limit"
-           />
+          <input
+            type="datetime-local"
+            onChange={handleLimitchange}
+            className="new-task-limit"
+          />
 
           <br />
           <label>詳細</label>
