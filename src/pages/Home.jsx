@@ -14,6 +14,7 @@ export const Home = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
+
   useEffect(() => {
     axios
       .get(`${url}/lists`, {
@@ -82,14 +83,22 @@ export const Home = () => {
               </p>
             </div>
           </div>
-          <ul className="list-tab">
+          <ul className="list-tab" role="tablist">
             {lists.map((list, key) => {
               const isActive = list.id === selectListId;
               return (
                 <li
                   key={key}
+                  role="tab"
+                  tabIndex={0}
+                  aria-selected={isActive}
                   className={`list-tab-item ${isActive ? 'active' : ''}`}
                   onClick={() => handleSelectList(list.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      handleSelectList(list.id);
+                    }
+                  }}
                 >
                   {list.title}
                 </li>
@@ -159,7 +168,8 @@ const Tasks = (props) => {
                 <br />
                 {task.done ? '完了' : '未完了'}
                 <br />
-                期限: {task.limit ? new Date(task.limit).toLocaleString() : 'なし'}
+                期限:{' '}
+                {task.limit ? new Date(task.limit).toLocaleString() : 'なし'}
                 <br />
                 残り時間: {calculateRemainingTime(task.limit)}
               </Link>
@@ -183,7 +193,8 @@ const Tasks = (props) => {
               <br />
               {task.done ? '完了' : '未完了'}
               <br />
-              期限: {task.limit ? new Date(task.limit).toLocaleString() : 'なし'}
+              期限:{' '}
+              {task.limit ? new Date(task.limit).toLocaleString() : 'なし'}
               <br />
               残り時間: {calculateRemainingTime(task.limit)}
             </Link>
